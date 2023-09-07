@@ -2,6 +2,7 @@
 
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   // const tasks = useQuery(api.tasks.get);
@@ -12,5 +13,11 @@ export default function Home() {
   //     ))}
   //   </main>
   // );
-  return <div>Home</div>
+
+  return (
+    <div>
+      <p>Home</p>
+      <Button>Dummy</Button>
+    </div>
+  )
 }
