@@ -1,28 +1,18 @@
 "use client"
 
-import { useQuery } from "convex/react";
-import { api } from "../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
-import { SignIn, SignInButton, SignOutButton, UserButton, useUser } from "@clerk/clerk-react";
+import { SignInButton, SignOutButton } from "@clerk/nextjs";
+import { useTheme } from "next-themes";
 
 export default function Home() {
-  const { user } = useUser();
-  // const tasks = useQuery(api.tasks.get);
-  // return (
-  //   <main className="flex min-h-screen flex-col items-center justify-between p-24">
-  //     {tasks?.map(({ _id, text }) => (
-  //       <div key={_id.toString()}>{text}</div>
-  //     ))}
-  //   </main>
-  // );
+  const { theme, setTheme } = useTheme();
 
   return (
-    <div>
-      <p>Home</p>
-      {/* <Button onClick={() => SignIn()}>Login</Button> */}
+    <main className="w-full grow h-fit flex flex-col justify-center min-h-[85vh]">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem culpa ratione libero amet cum aspernatur dolorem accusantium asperiores! Quia officia nobis reprehenderit dolor commodi modi voluptatem delectus ut est animi.
       <SignInButton>LogIn</SignInButton>
       <SignOutButton>LogOut</SignOutButton>
-      {JSON.stringify(user) || "No User"}
-    </div>
+      <Button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>Toggle Theme</Button>
+    </main>
   )
 }
