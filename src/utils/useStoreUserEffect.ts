@@ -30,6 +30,6 @@ export default function useStoreUserEffect() {
     return () => setUserId(null);
     // Make sure the effect reruns if the user logs in with
     // a different identity
-  }, [isAuthenticated, storeUser, user?.id]);
+  }, [isAuthenticated, storeUser, userId]);
   return userId;
 }

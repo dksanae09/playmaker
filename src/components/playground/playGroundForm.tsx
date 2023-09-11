@@ -6,32 +6,30 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import UsersList from "./usersList";
 
 const formSchema = z.object({
     name: z.string().min(5).max(50),
     description: z.string().min(10).max(100).optional(),
-    owner: z.string().uuid(),
-    editors: z.array(z.string().uuid()),
+    owner: z.string(),
+    editors: z.string(),
 })
 
 export default function PlayGroundForm(
     { isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (isOpen: boolean) => void }
 ) {
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
-            description: "",
             owner: "",
-            editors: [],
+            editors: "",
         },
     })
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         setIsOpen(!isOpen)
         console.log(values)
-
     }
 
     return (
@@ -58,13 +56,28 @@ export default function PlayGroundForm(
                     name="owner"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Name</FormLabel>
+                            <FormLabel>Owner</FormLabel>
                             <FormControl>
-                                {/* todo */}
-                                {/* <Select /> */}
+                                <UsersList onChange={field.onChange} />
                             </FormControl>
                             <FormDescription>
                                 Owner( Admin )
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="editors"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Editor</FormLabel>
+                            <FormControl>
+                                <UsersList omitValue={form.getValues().owner} onChange={field.onChange} />
+                            </FormControl>
+                            <FormDescription>
+                                Editor
                             </FormDescription>
                             <FormMessage />
                         </FormItem>

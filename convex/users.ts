@@ -1,4 +1,4 @@
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 /**
  * Insert or update the user in a Convex table then return the document's ID.
@@ -19,7 +19,6 @@ export const store = mutation({
     if (!identity) {
       throw new Error("Called storeUser without authentication present");
     }
-
     // Check if we've already stored this identity before.
     const user = await ctx.db
       .query("users")
@@ -40,5 +39,12 @@ export const store = mutation({
       email: identity.email!,
       tokenIdentifier: identity.tokenIdentifier,
     });
+  },
+});
+
+export const getAll = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db.query("users").collect();
   },
 });
