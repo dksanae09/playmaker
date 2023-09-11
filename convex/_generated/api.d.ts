@@ -17,6 +17,7 @@ import type {
 import type * as messages from "../messages";
 import type * as playground from "../playground";
 import type * as users from "../users";
+import type * as withZod from "../withZod";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -30,6 +31,7 @@ declare const fullApi: ApiFromModules<{
   messages: typeof messages;
   playground: typeof playground;
   users: typeof users;
+  withZod: typeof withZod;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

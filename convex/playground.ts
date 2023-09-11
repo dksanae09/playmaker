@@ -1,12 +1,12 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 export const create = mutation({
   args: {
     name: v.string(),
     description: v.optional(v.string()),
     owner: v.id("users"),
-    editors: v.array(v.id("users")),
+    editor: v.id("users"),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -17,7 +17,16 @@ export const create = mutation({
       name: args.name,
       description: args.description,
       owner: args.owner,
-      editors: args.editors,
+      editor: args.editor,
     });
+  },
+});
+
+export const get = query({
+  args: {
+    playgroundId: v.id("playgrounds"),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.playgroundId);
   },
 });

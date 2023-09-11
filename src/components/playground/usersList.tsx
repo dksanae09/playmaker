@@ -8,8 +8,9 @@ import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover
 import { Command, CommandInput, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
 import { ChevronsUpDown, Check } from 'lucide-react';
 import { Button } from '../ui/button';
+import { Id } from '../../../convex/_generated/dataModel';
 
-export default function UsersList({ omitValue, onChange }: { omitValue?: string, onChange: (value: string) => void }) {
+export default function UsersList({ omitValue, onChange }: { omitValue?: Id<"users">, onChange: (value: Id<"users">) => void }) {
     const usersList = useQuery(api.users.getAll);
     const filteredUsersList = usersList?.filter((user) => user._id !== omitValue)
     const [open, setOpen] = useState(false)
@@ -40,7 +41,7 @@ export default function UsersList({ omitValue, onChange }: { omitValue?: string,
                                 key={user._id}
                                 onSelect={(currentValue) => {
                                     setEmail(currentValue === email ? "" : currentValue)
-                                    onChange(user._id)
+                                    onChange(user._id as Id<"users">)
                                     setOpen(false)
                                 }}
                             >

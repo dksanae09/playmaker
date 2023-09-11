@@ -7,29 +7,45 @@ import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import UsersList from "./usersList";
+import { useMutation } from "convex/react";
+import { api } from "../../../convex/_generated/api";
+import { zid } from "../../../convex/withZod";
+import { Id } from "../../../convex/_generated/dataModel";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     name: z.string().min(5).max(50),
     description: z.string().min(10).max(100).optional(),
-    owner: z.string(),
-    editors: z.string(),
+    owner: zid("users").nullable(),
+    editor: zid("users").nullable(),
 })
 
 export default function PlayGroundForm(
     { isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (isOpen: boolean) => void }
 ) {
+    const router = useRouter();
+    const createPlayground = useMutation(api.playground.create)
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
-            owner: "",
-            editors: "",
+            owner: null,
+            editor: null,
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsOpen(!isOpen)
-        console.log(values)
+        const playgroundId = await createPlayground(
+            {
+                name: values.name,
+                description: values.description,
+                owner: values.owner as Id<"users">,
+                editor: values.editor as Id<"users">,
+            }
+        )
+        console.log(values, playgroundId)
+        router.push(`/playground/${playgroundId}`);
     }
 
     return (
@@ -61,7 +77,7 @@ export default function PlayGroundForm(
                                 <UsersList onChange={field.onChange} />
                             </FormControl>
                             <FormDescription>
-                                Owner( Admin )
+                                Owner
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -69,12 +85,12 @@ export default function PlayGroundForm(
                 />
                 <FormField
                     control={form.control}
-                    name="editors"
+                    name="editor"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Editor</FormLabel>
                             <FormControl>
-                                <UsersList omitValue={form.getValues().owner} onChange={field.onChange} />
+                                <UsersList omitValue={form.getValues().owner as Id<"users">} onChange={field.onChange} />
                             </FormControl>
                             <FormDescription>
                                 Editor

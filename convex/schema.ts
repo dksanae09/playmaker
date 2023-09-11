@@ -12,7 +12,7 @@ export default defineSchema({
     name: v.string(),
     description: v.optional(v.string()),
     owner: v.id("users"),
-    editors: v.array(v.id("users")),
+    editor: v.id("users"),
   }),
   users: defineTable({
     email: v.string(),
