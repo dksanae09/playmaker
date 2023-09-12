@@ -30,3 +30,23 @@ export const get = query({
     return await ctx.db.get(args.playgroundId);
   },
 });
+
+export const listActive = query({
+  args: {
+    userId: v.optional(v.id("users")),
+  },
+  handler: async (ctx, args) => {
+    if (!args.userId) {
+      throw new Error("Called listActivePlaygrounds without userId");
+    }
+    const owners = await ctx.db
+      .query("playgrounds")
+      .filter((q) => q.eq(q.field("owner"), args.userId))
+      .collect();
+    const editors = await ctx.db
+      .query("playgrounds")
+      .filter((q) => q.eq(q.field("editor"), args.userId))
+      .collect();
+    return owners.concat(editors);
+  },
+});
