@@ -4,7 +4,7 @@ import { v } from "convex/values";
 export const add = mutation({
   args: {
     message: v.string(),
-    playroundId: v.id("playgrounds"),
+    playgroundId: v.id("playgrounds"),
     fromUser: v.id("users"),
     toUser: v.id("users"),
   },
@@ -15,7 +15,7 @@ export const add = mutation({
     }
     return await ctx.db.insert("messages", {
       message: args.message,
-      playgroundId: args.playroundId,
+      playgroundId: args.playgroundId,
       fromUser: args.fromUser,
       toUser: args.toUser,
     });
