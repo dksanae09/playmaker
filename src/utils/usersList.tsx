@@ -2,13 +2,13 @@
 
 import { useQuery } from 'convex/react'
 import React, { useState } from 'react'
-import { api } from '../../../convex/_generated/api'
+import { api } from '../../convex/_generated/api'
 import { cn } from '@/lib/utils';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Command, CommandInput, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
 import { ChevronsUpDown, Check } from 'lucide-react';
-import { Button } from '../ui/button';
-import { Id } from '../../../convex/_generated/dataModel';
+import { Button } from '../components/ui/button';
+import { Id } from '../../convex/_generated/dataModel';
 
 export default function UsersList({ omitValue, onChange }: { omitValue?: Id<"users">, onChange: (value: Id<"users">) => void }) {
     const usersList = useQuery(api.users.getAll);

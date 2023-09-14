@@ -27,6 +27,10 @@ export default function Home() {
 function AuthenticatedHome() {
   const { theme, setTheme } = useTheme();
   const userId = useStoreUserEffect();
+  if (userId !== null) {
+    localStorage.setItem('userId', userId);
+    console.log("Stored user ID: ", userId)
+  }
 
   return (
     <main className="w-full grow h-fit flex flex-col justify-center min-h-[85vh]">

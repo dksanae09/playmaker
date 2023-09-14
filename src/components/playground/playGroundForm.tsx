@@ -6,7 +6,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import UsersList from "./usersList";
+import UsersList from "../../utils/usersList";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { zid } from "../../../convex/withZod";
@@ -16,8 +16,8 @@ import { useRouter } from "next/navigation";
 const formSchema = z.object({
     name: z.string().min(5).max(50),
     description: z.string().min(10).max(100).optional(),
-    owner: zid("users").nullable(),
-    editor: zid("users").nullable(),
+    owner: zid("users"),
+    editor: zid("users"),
 })
 
 export default function PlayGroundForm(
@@ -29,23 +29,29 @@ export default function PlayGroundForm(
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
-            owner: null,
-            editor: null,
+            owner: undefined,
+            editor: undefined,
         },
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        if (values.owner === undefined || values.editor === undefined) {
+            return console.error("Owner or Editor is not selected")
+        }
         setIsOpen(!isOpen)
-        const playgroundId = await createPlayground(
-            {
-                name: values.name,
-                description: values.description,
-                owner: values.owner as Id<"users">,
-                editor: values.editor as Id<"users">,
-            }
-        )
-        console.log(values, playgroundId)
-        router.push(`/playground/${playgroundId}`);
+        try {
+            const playgroundId = await createPlayground(
+                {
+                    name: values.name,
+                    description: values.description,
+                    owner: values.owner as Id<"users">,
+                    editor: values.editor as Id<"users">,
+                }
+            )
+            router.push(`/playground/${playgroundId}`);
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     return (
