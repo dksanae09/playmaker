@@ -2,6 +2,12 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
+  videos: defineTable({
+    body: v.string(),
+    userId: v.id("users"),
+    playgroundId: v.id("playgrounds"),
+    format: v.string(),
+  }),
   messages: defineTable({
     message: v.string(),
     playgroundId: v.id("playgrounds"),

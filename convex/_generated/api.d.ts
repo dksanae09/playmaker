@@ -17,6 +17,7 @@ import type {
 import type * as messages from "../messages";
 import type * as playground from "../playground";
 import type * as users from "../users";
+import type * as videos from "../videos";
 import type * as withZod from "../withZod";
 
 /**
@@ -31,6 +32,7 @@ declare const fullApi: ApiFromModules<{
   messages: typeof messages;
   playground: typeof playground;
   users: typeof users;
+  videos: typeof videos;
   withZod: typeof withZod;
 }>;
 export declare const api: FilterApi<

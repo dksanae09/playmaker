@@ -37,7 +37,7 @@ export default function PlaygroundBoard({ params }: { params: { id: Id<"playgrou
                     <PlaygroundChat userId={userId} playground={playground} />
                 </TabsContent>
                 <TabsContent value="video">
-                    <PlaygroundVideo />
+                    <PlaygroundVideo userId={userId} playground={playground} />
                 </TabsContent>
             </Tabs>
         </div>
