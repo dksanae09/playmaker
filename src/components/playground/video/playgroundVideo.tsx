@@ -10,7 +10,13 @@ export default function PlaygroundVideo() {
     return (
         <div>
             Video here!
-            <Input placeholder="Video" type='file' value={value} onChange={(e) => setValue(e.target.value)} />
+            <Input
+                placeholder="Video"
+                type='file'
+                accept='video/*'
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+            />
         </div>
     )
 }

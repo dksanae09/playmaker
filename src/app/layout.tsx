@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import ContextProvider from '@/context/contextProvider'
 import ConvexClientProvider from '@/context/convexClientProvider'
+import Topbar from '@/components/topbar/Topbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,6 +22,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <ContextProvider>
+            <Topbar />
             {children}
           </ContextProvider>
         </body>
