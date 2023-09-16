@@ -1,17 +1,12 @@
-import React, { useState, useRef } from 'react'
-import { Doc, Id } from '../../../../convex/_generated/dataModel'
+import React, { useState, useRef, useContext } from 'react'
 import { useMutation } from 'convex/react'
 import { api } from '../../../../convex/_generated/api'
 import ChatInput from './chatInput'
 import ChatView from './chatView'
+import { PlaygroundContext } from '@/context/playgroundContextProvider'
 
-export default function PlaygroundChat({
-    userId,
-    playground,
-}: {
-    userId: Id<"users">
-    playground: Doc<"playgrounds">
-}) {
+export default function PlaygroundChat() {
+    const { userId, playground } = useContext(PlaygroundContext);
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const textareaRef = useRef<HTMLTextAreaElement | null>(null)
     const [input, setInput] = useState<string>('')
@@ -21,8 +16,12 @@ export default function PlaygroundChat({
         if (!input) return
         setIsLoading(true)
 
+        if (userId === undefined || playground === undefined) {
+            throw new Error("User or Playground is undefined");
+        }
+
         try {
-            addMessage({ message: input, playgroundId: playground._id, fromUser: userId, toUser: userId === playground.owner ? playground.editor : playground.owner })
+            addMessage({ message: input, playgroundId: playground?._id, fromUser: userId, toUser: userId === playground?.owner ? playground.editor : playground?.owner })
             setInput('')
             textareaRef.current?.focus()
         } catch {
@@ -34,9 +33,9 @@ export default function PlaygroundChat({
 
     return (
         <div>
-            <ChatView userId={userId} playground={playground} />
+            <ChatView />
             <ChatInput input={input} setInput={setInput} sendMessage={sendMessage}
-                textareaRef={textareaRef} playground={playground} userId={userId} />
+                textareaRef={textareaRef} />
         </div>
     )
 }

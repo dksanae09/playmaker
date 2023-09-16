@@ -2,12 +2,13 @@
 
 import { Input } from '@/components/ui/input'
 import { useMutation } from 'convex/react';
-import React, { FormEvent, useRef, useState } from 'react'
+import React, { FormEvent, useContext, useRef, useState } from 'react'
 import { api } from '../../../../convex/_generated/api';
-import { Doc, Id } from '../../../../convex/_generated/dataModel';
 import { Button } from '@/components/ui/button';
+import { PlaygroundContext } from '@/context/playgroundContextProvider';
 
-export default function PlaygroundVideoForm({ userId, playground }: { userId: Id<"users">, playground: Doc<"playgrounds"> }) {
+export default function PlaygroundVideoForm() {
+    const { userId, playground } = useContext(PlaygroundContext);
     const generateUploadUrl = useMutation(api.videos.generateUploadUrl);
     const sendVideo = useMutation(api.videos.sendVideo);
 
@@ -16,6 +17,10 @@ export default function PlaygroundVideoForm({ userId, playground }: { userId: Id
 
     if (userId === null) {
         return <>Waiting for User!</>
+    }
+
+    if (playground === undefined) {
+        return <>Waiting for Playground!</>
     }
 
     async function handleSendVideo(e: FormEvent) {
@@ -33,7 +38,11 @@ export default function PlaygroundVideoForm({ userId, playground }: { userId: Id
         const { storageId } = await result.json();
 
         // Step 3: Save the newly allocated storage id to the database
-        await sendVideo({ storageId, userId, playgroundId: playground._id });
+        if (userId === undefined || playground === undefined) {
+            throw new Error("User or Playground is undefined");
+            return;
+        }
+        await sendVideo({ storageId, userId, playgroundId: playground?._id });
 
         setSelectedVideo(null);
         videoInput.current!.value = "";

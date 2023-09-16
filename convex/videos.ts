@@ -23,9 +23,12 @@ export const sendVideo = mutation({
 
 const list = query({
   args: {
-    playgroundId: v.id("playgrounds"),
+    playgroundId: v.union(v.id("playgrounds"), v.null()),
   },
   handler: async (ctx, args) => {
+    if (args.playgroundId === undefined) {
+      return null;
+    }
     const video = await ctx.db
       .query("videos")
       .filter((q) => q.eq(q.field("playgroundId"), args.playgroundId))
@@ -36,11 +39,11 @@ const list = query({
 
 export const renderVideo = query({
   args: {
-    playgroundId: v.id("playgrounds"),
+    playgroundId: v.union(v.id("playgrounds"), v.null()),
   },
   handler: async (ctx, args) => {
     const video = await list(ctx, args);
-    if (!video) {
+    if (!video || args.playgroundId === undefined) {
       return null;
     }
     const url = await ctx.storage.getUrl(video.body);

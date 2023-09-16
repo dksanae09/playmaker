@@ -1,9 +1,11 @@
 import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
-import { Id, Doc } from "../../../../convex/_generated/dataModel";
+import { PlaygroundContext } from "@/context/playgroundContextProvider";
+import { useContext } from "react";
 
-export default function ChatView({ userId, playground }: { userId: Id<"users">, playground: Doc<"playgrounds"> }) {
-    const getMessages = useQuery(api.messages.get, { playgroundId: playground._id })
+export default function ChatView() {
+    const { userId, playground } = useContext(PlaygroundContext);
+    const getMessages = useQuery(api.messages.get, { playgroundId: playground?._id || null })
     const styleMsg = 'bg-primary text-secondary';
 
     return (

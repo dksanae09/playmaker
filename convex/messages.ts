@@ -4,7 +4,7 @@ import { v } from "convex/values";
 export const add = mutation({
   args: {
     message: v.string(),
-    playgroundId: v.id("playgrounds"),
+    playgroundId: v.union(v.id("playgrounds"), v.null()),
     fromUser: v.id("users"),
     toUser: v.id("users"),
   },
@@ -13,6 +13,10 @@ export const add = mutation({
     if (!identity) {
       throw new Error("Called addMessage without authentication present");
     }
+    if (args.playgroundId === null) {
+      throw new Error("Called addMessage without playgroundId present");
+    }
+
     return await ctx.db.insert("messages", {
       message: args.message,
       playgroundId: args.playgroundId,
@@ -24,12 +28,15 @@ export const add = mutation({
 
 export const get = query({
   args: {
-    playgroundId: v.id("playgrounds"),
+    playgroundId: v.union(v.id("playgrounds"), v.null()),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
       throw new Error("Called getMessages without authentication present");
+    }
+    if (args.playgroundId === null) {
+      throw new Error("Called getMessages without playgroundId present");
     }
     return await ctx.db
       .query("messages")

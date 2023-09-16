@@ -1,15 +1,16 @@
 import { Button } from "@/components/ui/button"
 import TextareaAutosize from 'react-textarea-autosize'
-import { Doc, Id } from "../../../../convex/_generated/dataModel"
+import { PlaygroundContext } from "@/context/playgroundContextProvider"
+import { useContext } from "react"
 
-export default function ChatInput({ input, setInput, sendMessage, textareaRef, playground, userId }: {
+export default function ChatInput({ input, setInput, sendMessage, textareaRef }: {
     input: string
     setInput: React.Dispatch<React.SetStateAction<string>>
     textareaRef: React.MutableRefObject<HTMLTextAreaElement | null>
     sendMessage: () => void
-    playground: Doc<"playgrounds">
-    userId: Id<"users">
 }) {
+    const { userId, playground } = useContext(PlaygroundContext);
+
     return (
         <div className='border-t px-4 pt-4 mb-2 sm:mb-0'>
             <div className='relative flex-1 overflow-hidden rounded-lg shadow-sm ring-1 ring-inset focus-within:ring-2 focus-within:ring-indigo-600'>

@@ -1,22 +1,30 @@
 'use client'
 
 import { useQuery } from 'convex/react'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { api } from '../../../../convex/_generated/api'
 import { Id } from '../../../../convex/_generated/dataModel'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import PlaygroundChat from '@/components/playground/chat/playgroundChat'
 import PlaygroundVideo from '@/components/playground/video/playgroundVideo'
+import PlaygroundOverview from '@/components/playground/overview/playgroundOverview'
+import { PlaygroundContext } from '@/context/playgroundContextProvider'
 
 export default function PlaygroundBoard({ params }: { params: { id: Id<"playgrounds"> } }) {
+    const { userId, setUserId, setPlayground } = useContext(PlaygroundContext)
     const playground = useQuery(api.playground.get, { playgroundId: params.id })
-    const [userId, setUserId] = useState<Id<"users"> | null>(null)
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             setUserId(localStorage.getItem('userId') as Id<"users">)
         }
-    }, [])
+    }, [userId, setUserId])
+
+    useEffect(() => {
+        if (playground) {
+            setPlayground(playground)
+        }
+    }, [playground, setPlayground])
 
     if (playground?.owner !== userId && playground?.editor !== userId) {
         return <div>Not authorized</div>
@@ -31,13 +39,13 @@ export default function PlaygroundBoard({ params }: { params: { id: Id<"playgrou
                     <TabsTrigger value="video">Video</TabsTrigger>
                 </TabsList>
                 <TabsContent value="overview">
-                    <>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Numquam fugiat ea rerum perferendis. Aspernatur accusantium laborum, exercitationem veritatis voluptatem odio explicabo dolores praesentium tenetur sapiente id voluptatibus non expedita accusamus?</>
+                    <PlaygroundOverview />
                 </TabsContent>
                 <TabsContent value="chat">
-                    <PlaygroundChat userId={userId} playground={playground} />
+                    <PlaygroundChat />
                 </TabsContent>
                 <TabsContent value="video">
-                    <PlaygroundVideo userId={userId} playground={playground} />
+                    <PlaygroundVideo />
                 </TabsContent>
             </Tabs>
         </div>
