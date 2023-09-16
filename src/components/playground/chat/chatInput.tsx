@@ -14,7 +14,7 @@ export default function ChatInput({ input, setInput, sendMessage, textareaRef }:
     const { userId, playground } = useContext(PlaygroundContext);
 
     return (
-        <Card className='border-t px-4 pt-4 mb-2 sm:mb-0'>
+        <Card className='border-t px-4 pt-4 mb-2 sm:mb-0 sticky'>
             <CardContent className='relative pt-2 flex-1 overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-accent focus-within:ring-2 focus-within:ring-primary'>
                 <TextareaAutosize
                     ref={textareaRef}
