@@ -13,6 +13,7 @@ import { PlaygroundContext } from '@/context/playgroundContextProvider'
 export default function PlaygroundBoard({ params }: { params: { id: Id<"playgrounds"> } }) {
     const { userId, setUserId, setPlayground } = useContext(PlaygroundContext)
     const playground = useQuery(api.playground.get, { playgroundId: params.id })
+    console.log('playground', playground)
 
     useEffect(() => {
         if (typeof window !== 'undefined') {

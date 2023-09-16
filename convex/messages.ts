@@ -1,5 +1,11 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
+import AES from "crypto-js/aes";
+
+export default function encryptText(text: string) {
+  const encryptText = AES.encrypt(text, process.env.NEXTAUTH_SECRET || "");
+  return encryptText.toString();
+}
 
 export const add = mutation({
   args: {
@@ -16,9 +22,9 @@ export const add = mutation({
     if (args.playgroundId === null) {
       throw new Error("Called addMessage without playgroundId present");
     }
-
+    const encrypted = encryptText(args.message);
     return await ctx.db.insert("messages", {
-      message: args.message,
+      message: encrypted,
       playgroundId: args.playgroundId,
       fromUser: args.fromUser,
       toUser: args.toUser,

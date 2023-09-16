@@ -2,6 +2,7 @@ import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { PlaygroundContext } from "@/context/playgroundContextProvider";
 import { useContext } from "react";
+import { decryptText } from "@/utils/encryptdecrpyt";
 
 export default function ChatView() {
     const { userId, playground } = useContext(PlaygroundContext);
@@ -14,7 +15,7 @@ export default function ChatView() {
             {getMessages?.map((message) => {
                 return (
                     <div className={message.fromUser === userId ? '' : styleMsg} key={message._id}>
-                        {message.message}
+                        {decryptText(message.message)}
                     </div>
                 )
             })}
