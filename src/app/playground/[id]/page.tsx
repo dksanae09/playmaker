@@ -33,21 +33,21 @@ export default function PlaygroundBoard({ params }: { params: { id: Id<"playgrou
 
     return (
         <Card className='w-full h-full flex'>
-            <Tabs defaultValue="overview">
-                <TabsList>
-                    <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="chat">Chat</TabsTrigger>
-                    <TabsTrigger value="video">Video</TabsTrigger>
-                </TabsList>
+            <Tabs defaultValue="overview" className='flex flex-col w-full items-center'>
                 <TabsContent value="overview">
                     <PlaygroundOverview />
                 </TabsContent>
-                <TabsContent value="chat">
+                <TabsContent value="chat" className='w-full'>
                     <PlaygroundChat />
                 </TabsContent>
                 <TabsContent value="video">
                     <PlaygroundVideo />
                 </TabsContent>
+                <TabsList className='w-fit bottom-10 fixed bg-blur-md'>
+                    <TabsTrigger value="overview">Overview</TabsTrigger>
+                    <TabsTrigger value="chat">Chat</TabsTrigger>
+                    <TabsTrigger value="video">Video</TabsTrigger>
+                </TabsList>
             </Tabs>
         </Card>
     )

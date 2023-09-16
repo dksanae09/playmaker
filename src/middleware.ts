@@ -8,5 +8,5 @@ export default authMiddleware({
 });
 
 export const config = {
-  matcher: ["/(api|trpc)(.*)", "/playground"],
+  matcher: ["/(api|trpc)(.*)", "/playground", "/profile"],
 };

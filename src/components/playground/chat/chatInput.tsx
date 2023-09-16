@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button"
 import TextareaAutosize from 'react-textarea-autosize'
 import { PlaygroundContext } from "@/context/playgroundContextProvider"
 import { useContext } from "react"
+import { Card, CardContent } from "@/components/ui/card"
+import { SendIcon } from "lucide-react"
 
 export default function ChatInput({ input, setInput, sendMessage, textareaRef }: {
     input: string
@@ -12,8 +14,8 @@ export default function ChatInput({ input, setInput, sendMessage, textareaRef }:
     const { userId, playground } = useContext(PlaygroundContext);
 
     return (
-        <div className='border-t px-4 pt-4 mb-2 sm:mb-0'>
-            <div className='relative flex-1 overflow-hidden rounded-lg shadow-sm ring-1 ring-inset focus-within:ring-2 focus-within:ring-indigo-600'>
+        <Card className='border-t px-4 pt-4 mb-2 sm:mb-0'>
+            <CardContent className='relative pt-2 flex-1 overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-accent focus-within:ring-2 focus-within:ring-primary'>
                 <TextareaAutosize
                     ref={textareaRef}
                     onKeyDown={(e) => {
@@ -25,27 +27,22 @@ export default function ChatInput({ input, setInput, sendMessage, textareaRef }:
                     rows={1}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder={`Message ${playground?.editor !== userId ? 'editor' : 'owner'}`}
-                    className='block w-full resize-none border-0 focus:ring-0 sm:py-1.5 sm:text-sm sm:leading-6'
+                    placeholder={`Message ${playground?.editor !== userId ? 'Editor' : 'Owner'}`}
+                    className='block w-full resize-none border-0 bg-transparent text-primary placeholder:text-primary placeholder:opacity-60 focus:ring-0 sm:py-1.5 sm:text-sm sm:leading-6'
                 />
 
-                <div
+                <CardContent
                     onClick={() => textareaRef.current?.focus()}
-                    className='py-2'
+                    className=""
                     aria-hidden='true'>
-                    <div className='py-px'>
-                        <div className='h-9' />
-                    </div>
-                </div>
+                </CardContent>
 
-                <div className='absolute right-0 bottom-0 flex justify-between py-2 pl-3 pr-2'>
-                    <div className='flex-shrin-0'>
-                        <Button onClick={sendMessage} type='submit'>
-                            Post
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <CardContent className='absolute right-4 top-1 flex justify-between p-0'>
+                    <Button variant="ghost" onClick={sendMessage} type='submit'>
+                        <SendIcon size={20} />
+                    </Button>
+                </CardContent>
+            </CardContent>
+        </Card>
     )
 }

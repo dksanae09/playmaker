@@ -4,6 +4,7 @@ import { api } from '../../../../convex/_generated/api'
 import ChatInput from './chatInput'
 import ChatView from './chatView'
 import { PlaygroundContext } from '@/context/playgroundContextProvider'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 export default function PlaygroundChat() {
     const { userId, playground } = useContext(PlaygroundContext);
@@ -32,10 +33,17 @@ export default function PlaygroundChat() {
     }
 
     return (
-        <div>
-            <ChatView />
-            <ChatInput input={input} setInput={setInput} sendMessage={sendMessage}
-                textareaRef={textareaRef} />
-        </div>
+        <Card>
+            <CardHeader className='text-4xl'>Chat</CardHeader>
+            <CardContent className='w-full'>
+                <ChatView />
+                <ChatInput
+                    input={input}
+                    setInput={setInput}
+                    sendMessage={sendMessage}
+                    textareaRef={textareaRef}
+                />
+            </CardContent>
+        </Card>
     )
 }

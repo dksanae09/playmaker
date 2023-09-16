@@ -1,20 +1,21 @@
 import React, { useContext } from 'react'
-import { Doc, Id } from '../../../../convex/_generated/dataModel'
 import TimeLine from '../timeLine';
 import { PlaygroundContext } from '@/context/playgroundContextProvider';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Separator } from "@/components/ui/separator"
 
 export default function PlaygroundOverview() {
     const { userId, playground } = useContext(PlaygroundContext);
     const role = userId === playground?.owner ? 'owner' : 'editor';
 
     return (
-        <div>
-            <h2>Title Here!</h2>
-            <p>Descp - Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam autem corporis dolorum magni dolor fugit adipisci recusandae aut praesentium voluptate hic, sint voluptates ipsum. Facere quidem explicabo beatae porro libero.</p>
-            <h3>Timeline</h3>
-            <p>Timeline - Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
-            {role}
+        <Card>
+            <CardHeader>Title Here!</CardHeader>
+            <CardContent>Descp - Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam autem corporis dolorum magni dolor fugit adipisci recusandae aut praesentium voluptate hic, sint voluptates ipsum. Facere quidem explicabo beatae porro libero.</CardContent>
+            <Separator />
+            <CardHeader>Timeline</CardHeader>
+            <CardContent>Timeline - Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</CardContent>
             <TimeLine role={role} />
-        </div>
+        </Card>
     )
 }
