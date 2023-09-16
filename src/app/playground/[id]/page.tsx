@@ -9,11 +9,11 @@ import PlaygroundChat from '@/components/playground/chat/playgroundChat'
 import PlaygroundVideo from '@/components/playground/video/playgroundVideo'
 import PlaygroundOverview from '@/components/playground/overview/playgroundOverview'
 import { PlaygroundContext } from '@/context/playgroundContextProvider'
+import { Card } from '@/components/ui/card'
 
 export default function PlaygroundBoard({ params }: { params: { id: Id<"playgrounds"> } }) {
     const { userId, setUserId, setPlayground } = useContext(PlaygroundContext)
     const playground = useQuery(api.playground.get, { playgroundId: params.id })
-    console.log('playground', playground)
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -32,7 +32,7 @@ export default function PlaygroundBoard({ params }: { params: { id: Id<"playgrou
     }
 
     return (
-        <div className='w-full h-full flex'>
+        <Card className='w-full h-full flex'>
             <Tabs defaultValue="overview">
                 <TabsList>
                     <TabsTrigger value="overview">Overview</TabsTrigger>
@@ -49,6 +49,6 @@ export default function PlaygroundBoard({ params }: { params: { id: Id<"playgrou
                     <PlaygroundVideo />
                 </TabsContent>
             </Tabs>
-        </div>
+        </Card>
     )
 }

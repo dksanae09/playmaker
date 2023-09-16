@@ -1,3 +1,4 @@
+import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
 /**
@@ -46,5 +47,18 @@ export const getAll = query({
   args: {},
   handler: async (ctx) => {
     return await ctx.db.query("users").collect();
+  },
+});
+
+export const get = query({
+  args: {
+    id: v.id("users"),
+  },
+  handler: async (ctx, { id }) => {
+    const user = await ctx.db.get(id);
+    if (!user) {
+      throw new Error(`User ${id} not found`);
+    }
+    return user;
   },
 });

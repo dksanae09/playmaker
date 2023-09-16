@@ -14,6 +14,7 @@ import { Card, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
 import links from '@/utils/links';
 import { UserButton, useUser } from '@clerk/nextjs';
+import Logo from '../logo';
 
 function WebMenue() {
     return (
@@ -58,7 +59,9 @@ export default function Topbar() {
                 className='flex gap-3 self-center pl-2 font-mono italic text-primary'
             >
                 <span className='self-center text-primary'>
-                    <div className='rounded-full bg-secondary'>hi</div>
+                    <div className='rounded-full bg-secondary'>
+                        <Logo />
+                    </div>
                 </span>
                 <span className='hidden sm:block sm:text-3xl'>Playmaker</span>
             </Link>

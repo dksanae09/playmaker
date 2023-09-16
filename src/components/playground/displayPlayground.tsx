@@ -4,31 +4,31 @@ import { useQuery } from "convex/react"
 import { api } from "../../../convex/_generated/api"
 import { Id } from "../../../convex/_generated/dataModel";
 import useStoreUserEffect from "@/utils/useStoreUserEffect";
-import Link from "next/link";
+import { Card, CardContent } from "../ui/card";
+import CardianBox from "../Cardian";
 
 function AuthenticatedPlayground({ userId }: { userId: Id<"users"> }) {
-    const activePlaygrounds = useQuery(api.playground.listActive, { userId })
+    const activePlaygrounds = useQuery(api.playground.listActive, { userId });
+
+    if (!activePlaygrounds) return (<>No Active Playhround!</>);
 
     return (
-        <div className="flex flex-col">
+        <CardContent className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 px-2'>
             {activePlaygrounds && activePlaygrounds?.map((playground) => (
-                <div className="flex flex-col bg-primary text-secondary p-3" key={playground._id}>
-                    <Link href={`/playground/${playground._id}`}>
-                        <h3>{playground.name}</h3>
-                        <p>{playground.description || "About this playground..."}</p>
-                    </Link>
-                </div>
+                <CardianBox playground={playground} key={playground._id} />
             ))}
-        </div>
+        </CardContent>
     )
 }
 
 export default function DisplayPlayground() {
     const userId = useStoreUserEffect();
 
+    if (!userId) return (<>User not found!</>);
+
     return (
-        <div className="flex flex-col">
+        <Card>
             {userId && <AuthenticatedPlayground userId={userId} />}
-        </div>
+        </Card>
     )
 }

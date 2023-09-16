@@ -23,7 +23,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <ContextProvider>
             <Topbar />
-            {children}
+            <div className='md:py-18 container h-fit grow py-2'>{children}</div>
           </ContextProvider>
         </body>
       </html>
