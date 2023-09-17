@@ -4,6 +4,7 @@ import { PlaygroundContext } from "@/context/playgroundContextProvider";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { DatePickerWithRange } from "@/components/ui/date-range";
+import TaskFormSheet from "./taskFormSheet";
 
 export default function PlaygroundOverview() {
   const { userId, playground } = useContext(PlaygroundContext);
@@ -24,6 +25,7 @@ export default function PlaygroundOverview() {
       <CardContent>
         Timeline - Lorem ipsum dolor sit amet consectetur adipisicing elit.
         Quisquam, quod.
+        <TaskFormSheet playgroundId={playground?._id} />
       </CardContent>
       <TimeLine isOwner={isOwner} />
     </Card>

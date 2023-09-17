@@ -31,14 +31,17 @@ import { Calendar } from "@/components/ui/calendar";
 const formSchema = z.object({
   name: z.string().min(2).max(50),
   description: z.string().min(5).max(50).optional(),
-  isDone: z.boolean(),
   deadline: z.date().optional(),
 });
 
 export default function TaskForm({
+  open,
+  setOpen,
   playgroundId,
   projectDeadline,
 }: {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   playgroundId: Id<"playgrounds">;
   projectDeadline?: Date;
 }) {
@@ -47,7 +50,6 @@ export default function TaskForm({
     defaultValues: {
       name: "",
       description: "",
-      isDone: false,
       deadline: new Date(),
     },
   });
@@ -61,9 +63,10 @@ export default function TaskForm({
     const taskId = await addTasks({
       ...values,
       deadline: values.deadline?.toDateString(),
+      isDone: false,
       playgroundId,
     });
-    console.log(values, taskId);
+    setOpen(!open);
   }
 
   return (
@@ -97,22 +100,6 @@ export default function TaskForm({
               <FormDescription>
                 This is the description of the task.
               </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="isDone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Is task done?</FormLabel>
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
               <FormMessage />
             </FormItem>
           )}

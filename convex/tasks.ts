@@ -28,6 +28,23 @@ export const add = mutation({
   },
 });
 
+export const update = mutation({
+  args: {
+    taskId: v.id("tasks"),
+    isDone: v.boolean(),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated!");
+    }
+    if (!args.taskId) {
+      throw new Error("No taskId!");
+    }
+    return await ctx.db.patch(args.taskId, { isDone: args.isDone });
+  },
+});
+
 export const get = query({
   args: {
     playgroundId: v.optional(v.id("playgrounds")),
