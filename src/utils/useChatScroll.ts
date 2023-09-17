@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 
 export default function useChatScroll<T>(
-  dep: T
+  dep: T,
 ): React.MutableRefObject<HTMLDivElement> {
   const ref = useRef<HTMLDivElement>(null);
 

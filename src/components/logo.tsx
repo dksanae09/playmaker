@@ -1,8 +1,6 @@
-import React from 'react'
-import Image from 'next/image'
+import React from "react";
+import Image from "next/image";
 
 export default function Logo() {
-    return (
-        <Image src="/playmaker-light.svg" alt="Logo" width={30} height={30} />
-    )
+  return <Image src="/playmaker-light.svg" alt="Logo" width={30} height={30} />;
 }

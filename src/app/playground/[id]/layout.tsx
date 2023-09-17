@@ -1,9 +1,9 @@
-import PlaygroundContextProvider from "@/context/playgroundContextProvider"
+import PlaygroundContextProvider from "@/context/playgroundContextProvider";
 
 export default function PlayGroundLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode
+  children: React.ReactNode;
 }) {
-    return <PlaygroundContextProvider>{children}</PlaygroundContextProvider>
+  return <PlaygroundContextProvider>{children}</PlaygroundContextProvider>;
 }
