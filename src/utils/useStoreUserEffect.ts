@@ -18,25 +18,31 @@ export default function useStoreUserEffect() {
     if (!isAuthenticated) {
       return;
     }
+
+    const getUserIdfromLocalStorage = () => {
+      if (
+        typeof window !== "undefined" &&
+        localStorage.getItem("userId") !== null
+      ) {
+        setUserId(localStorage.getItem("userId") as Id<"users">);
+      }
+    };
+    getUserIdfromLocalStorage();
+
     // Store the user in the database.
     // Recall that `storeUser` gets the user information via the `auth`
     // object on the server. You don't need to pass anything manually here.
     async function createUser() {
       const id = await storeUser();
+      localStorage.setItem("userId", id);
       setUserId(id);
     }
     createUser();
+
     return () => setUserId(null);
     // Make sure the effect reruns if the user logs in with
     // a different identity
   }, [isAuthenticated, storeUser, userId]);
-
-  if (
-    typeof window !== "undefined" &&
-    localStorage.getItem("userId") !== null
-  ) {
-    return localStorage.getItem("userId") as Id<"users">;
-  }
 
   return userId;
 }
