@@ -13,8 +13,8 @@ export default function CreatePlayground() {
         <Card className="flex justify-start">
             <Popover open={isOpen} onOpenChange={setIsOpen}>
                 <PopoverTrigger asChild>
-                    <Button onClick={() => setIsOpen(!isOpen)} variant="ghost">
-                        <PlusCircle size={42} />
+                    <Button onClick={() => setIsOpen(!isOpen)} variant="ghost" className="text-2xl">
+                        Create
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-80">

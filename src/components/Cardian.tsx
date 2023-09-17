@@ -16,7 +16,7 @@ export default function CardianBox({ playground }: { playground: Doc<"playground
         <Card className='grid gap-2 w-[300px]'>
             <CardContent className='flex flex-col'>
                 <CardHeader className='flex justify-start self-start p-0'>
-                    <Button variant="link">
+                    <Button variant="link" className='flex justify-start p-0'>
                         <Link href={`/playground/${playground._id}`}>
                             {name}
                         </Link>

@@ -1,5 +1,9 @@
 const links = [
   {
+    name: "Home",
+    path: "/",
+  },
+  {
     name: "Profile",
     path: "/profile",
   },

@@ -6,6 +6,7 @@ import React, { FormEvent, useContext, useRef, useState } from 'react'
 import { api } from '../../../../convex/_generated/api';
 import { Button } from '@/components/ui/button';
 import { PlaygroundContext } from '@/context/playgroundContextProvider';
+import { Card } from '@/components/ui/card';
 
 export default function PlaygroundVideoForm() {
     const { userId, playground } = useContext(PlaygroundContext);
@@ -49,19 +50,22 @@ export default function PlaygroundVideoForm() {
     }
 
     return (
-        <form onSubmit={handleSendVideo}>
-            <Input
-                type="file"
-                accept="video/*"
-                ref={videoInput}
-                onChange={(event) => setSelectedVideo(event.target.files![0])}
-                disabled={selectedVideo !== null}
-            />
-            <Button
-                variant={selectedVideo === null ? "ghost" : "secondary"}
-                type="submit"
-                disabled={selectedVideo === null}
-            >Upload</Button>
-        </form>
+        <Card>
+            <form onSubmit={handleSendVideo} className='flex'>
+                <Input
+                    type="file"
+                    accept="video/*"
+                    ref={videoInput}
+                    className='border-primary border-2 opacity-25 focus:opacity-100'
+                    onChange={(event) => setSelectedVideo(event.target.files![0])}
+                    disabled={selectedVideo !== null}
+                />
+                <Button
+                    variant={selectedVideo === null ? "ghost" : "secondary"}
+                    type="submit"
+                    disabled={selectedVideo === null}
+                >Upload</Button>
+            </form>
+        </Card>
     )
 }

@@ -13,7 +13,7 @@ function AuthenticatedPlayground({ userId }: { userId: Id<"users"> }) {
     if (!activePlaygrounds) return (<>No Active Playhround!</>);
 
     return (
-        <CardContent className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 px-2'>
+        <CardContent className='grid grid-cols-1 m-0 p-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4'>
             {activePlaygrounds && activePlaygrounds?.map((playground) => (
                 <CardianBox playground={playground} key={playground._id} />
             ))}
@@ -27,7 +27,7 @@ export default function DisplayPlayground() {
     if (!userId) return (<>User not found!</>);
 
     return (
-        <Card>
+        <Card className="flex flex-col justify-center items-center">
             {userId && <AuthenticatedPlayground userId={userId} />}
         </Card>
     )
