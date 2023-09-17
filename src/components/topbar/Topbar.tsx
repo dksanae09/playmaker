@@ -1,21 +1,17 @@
-"use client";
-
 import React from "react";
 import Toggle from "./toggle";
-import { BanIcon, MenuIcon } from "lucide-react";
+import { MenuIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import links from "@/utils/links";
-import { useUser } from "@clerk/clerk-react";
 import Logo from "../logo";
-import ClerkUserProfile from "../clerkUserProfile";
+import ClerkUserProfile from "./clerkUserProfile";
 
 function WebMenue() {
   return (
@@ -27,8 +23,6 @@ function WebMenue() {
 }
 
 function MobileMenu() {
-  const { user } = useUser();
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>

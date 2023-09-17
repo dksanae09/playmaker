@@ -1,22 +1,20 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import encryptText, { decryptText } from "@/utils/encryptdecrpyt";
-import { Button } from "@/components/ui/button";
+import { decryptText } from "@/utils/encryptdecrpyt";
 import { PlaygroundContext } from "@/context/playgroundContextProvider";
 import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
-
-function TaskForm() {
-  const [tasks, setTasks] = useState(null);
-
-  return <></>;
-}
+import TaskForm from "./taskForm";
 
 export default function TimeLine({ isOwner }: { isOwner: boolean }) {
   const { playground } = useContext(PlaygroundContext);
   const tasks = useQuery(api.tasks.get, { playgroundId: playground?._id });
+
+  if (!playground) {
+    return <div>Playground not found!</div>;
+  }
 
   return (
     <Card>
@@ -33,7 +31,7 @@ export default function TimeLine({ isOwner }: { isOwner: boolean }) {
         })}
       </CardContent>
       <CardContent>
-        <TaskForm />
+        <TaskForm playgroundId={playground?._id} />
       </CardContent>
     </Card>
   );

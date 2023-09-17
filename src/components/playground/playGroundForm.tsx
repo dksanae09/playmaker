@@ -14,7 +14,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import UsersList from "../../utils/usersList";
+import UsersList from "../usersList";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { zid } from "../../../convex/withZod";
