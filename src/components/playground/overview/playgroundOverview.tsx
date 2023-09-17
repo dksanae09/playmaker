@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import TimeLine from '../timeLine';
+import TimeLine from './timeLine';
 import { PlaygroundContext } from '@/context/playgroundContextProvider';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Separator } from "@/components/ui/separator"

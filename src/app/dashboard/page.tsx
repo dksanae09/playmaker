@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function TimeLine({ isOwner }: { isOwner: boolean }) {
+export default function DashboardPage() {
     return (
         <div>
 
