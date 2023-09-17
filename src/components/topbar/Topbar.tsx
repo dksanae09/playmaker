@@ -13,14 +13,15 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Card, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
 import links from '@/utils/links';
-import { UserButton, useUser } from '@clerk/nextjs';
+import { useUser } from '@clerk/clerk-react';
 import Logo from '../logo';
+import ClerkUserProfile from '../clerkUserProfile';
 
 function WebMenue() {
     return (
-        <div className='flex flex-wrap justify-end gap-5 sm:flex-row'>
+        <div className='flex flex-wrap justify-end items-center gap-5 sm:flex-row'>
             <Toggle />
-            <UserButton />
+            <ClerkUserProfile />
         </div>
     );
 }
@@ -36,16 +37,10 @@ function MobileMenu() {
                 </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className='flex flex-col justify-end gap-5 border-primary'>
-                <div className='flex justify-center'>
+                <div className='flex justify-evenly'>
                     <Toggle />
-                    <Avatar>
-                        <AvatarImage src={user?.imageUrl ?? ''} />
-                        <AvatarFallback>
-                            <BanIcon />
-                        </AvatarFallback>
-                    </Avatar>
+                    <ClerkUserProfile />
                 </div>
-                <UserButton />
             </DropdownMenuContent>
         </DropdownMenu>
     );
