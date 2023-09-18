@@ -28,7 +28,9 @@ export default function TaskFormSheet({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="link">Add Task</Button>
+        <Button className="text-xl" variant="link">
+          Add Task
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

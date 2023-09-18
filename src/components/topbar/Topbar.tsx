@@ -7,11 +7,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { Card, CardContent } from "../ui/card";
-import { Button } from "../ui/button";
-import links from "@/utils/links";
 import Logo from "../logo";
 import ClerkUserProfile from "./clerkUserProfile";
+import Menubar from "./menubar";
 
 function WebMenue() {
   return (
@@ -54,23 +52,7 @@ export default function Topbar() {
         </span>
         <span className="hidden sm:block sm:text-3xl">Playmaker</span>
       </Link>
-      <Card className="m-0 hidden bg-accent p-1 sm:flex">
-        <CardContent className="m-0 flex gap-2 bg-accent p-0">
-          {links.map((link, index) => {
-            if (link.name === "Profile") {
-              return;
-            }
-            return (
-              <Button
-                className="bg-secondary text-secondary-foreground shadow-inner"
-                key={index}
-              >
-                <Link href={link.path}>{link.name}</Link>
-              </Button>
-            );
-          })}
-        </CardContent>
-      </Card>
+      <Menubar />
       <div className="hidden sm:flex">
         <WebMenue />
       </div>
