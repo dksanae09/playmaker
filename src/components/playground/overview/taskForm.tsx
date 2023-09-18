@@ -70,7 +70,7 @@ export default function TaskForm({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const taskId = await addTasks({
       ...values,
-      deadline: values.deadline?.toDateString(),
+      deadline: values.deadline?.toISOString(),
       isDone: false,
       playgroundId,
     });

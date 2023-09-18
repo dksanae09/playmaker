@@ -5,7 +5,7 @@ export const create = mutation({
   args: {
     name: v.string(),
     description: v.optional(v.string()),
-    deadline: v.optional(v.string()),
+    deadline: v.string(),
     owner: v.id("users"),
     editor: v.id("users"),
   },
@@ -30,6 +30,37 @@ export const get = query({
   },
   handler: async (ctx, args) => {
     return await ctx.db.get(args.playgroundId);
+  },
+});
+
+export const getTop = query({
+  args: {
+    limit: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      console.log("Called getTopPlaygrounds without authentication present");
+      return [];
+    }
+    const user = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("email"), identity.email))
+      .first();
+    if (!user) {
+      console.log("User not found!");
+      return [];
+    }
+    const playgrounds = await ctx.db
+      .query("playgrounds")
+      .filter((q) =>
+        q.or(
+          q.eq(q.field("owner"), user._id),
+          q.eq(q.field("editor"), user._id),
+        ),
+      )
+      .collect();
+    return playgrounds.slice(0, args.limit || 5);
   },
 });
 

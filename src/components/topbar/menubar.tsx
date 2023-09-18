@@ -1,6 +1,5 @@
 "use client";
 
-import links from "@/utils/links";
 import React from "react";
 import Link from "next/link";
 import {
@@ -13,13 +12,20 @@ import {
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
 export default function Menubar() {
+  const topPlaygrounds = useQuery(api.playground.getTop, { limit: 5 });
+  const playgroundLinks = topPlaygrounds?.map((playground) => ({
+    name: playground.name,
+    path: `/playground/${playground._id}`,
+  }));
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
+          <NavigationMenuTrigger>Routing</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
@@ -29,43 +35,43 @@ export default function Menubar() {
                     href="/"
                   >
                     <div className="mb-2 mt-4 text-lg font-medium">
-                      shadcn/ui
+                      Playmaker
                     </div>
                     <p className="text-sm leading-tight text-muted-foreground">
-                      Beautifully designed components built with Radix UI and
-                      Tailwind CSS.
+                      Beautifully designed and Coordinated for Creators!
                     </p>
                   </a>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
+              <ListItem href="/playground" title="Playgrounds">
+                Visit your playgrounds!
               </ListItem>
-              <ListItem href="/" title="Installation">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="/" title="Typography">
-                Styles for headings, paragraphs, lists...etc
+              <ListItem href="/" title="Documentation">
+                Coming Soon!
               </ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+          <NavigationMenuTrigger>Playgrounds</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {links.map((link, index) => (
-                <ListItem key={index} title={link.name} href={link.path}>
-                  {link.name}
-                </ListItem>
-              ))}
-            </ul>
+            {playgroundLinks && playgroundLinks?.length < 1 ? (
+              <ul className="flex w-[400px] p-4">No playgrounds found</ul>
+            ) : (
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                {playgroundLinks?.map((link, index) => (
+                  <ListItem key={index} title={link.name} href={link.path}>
+                    {link.name}
+                  </ListItem>
+                ))}
+              </ul>
+            )}
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/" legacyBehavior passHref>
+          <Link href="/dashboard" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Documentation
+              Dashboard
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

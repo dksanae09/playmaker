@@ -25,7 +25,7 @@ export default defineSchema({
   playgrounds: defineTable({
     name: v.string(),
     description: v.optional(v.string()),
-    deadline: v.optional(v.string()),
+    deadline: v.string(),
     owner: v.id("users"),
     editor: v.id("users"),
   }),
