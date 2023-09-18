@@ -20,10 +20,16 @@ import { api } from "../../../convex/_generated/api";
 import { zid } from "../../../convex/withZod";
 import { Id } from "../../../convex/_generated/dataModel";
 import { useRouter } from "next/navigation";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Calendar } from "../ui/calendar";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(5).max(50),
   description: z.string().min(10).max(100).optional(),
+  deadline: z.date().optional(),
   owner: zid("users"),
   editor: zid("users"),
 });
@@ -41,6 +47,7 @@ export default function PlayGroundForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      deadline: new Date(),
       owner: undefined,
       editor: undefined,
     },
@@ -55,6 +62,7 @@ export default function PlayGroundForm({
       const playgroundId = await createPlayground({
         name: values.name,
         description: values.description,
+        deadline: values.deadline?.toDateString(),
         owner: values.owner as Id<"users">,
         editor: values.editor as Id<"users">,
       });
@@ -83,12 +91,70 @@ export default function PlayGroundForm({
         />
         <FormField
           control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input placeholder="Playmaker" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your Playground description.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="deadline"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Deadline</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-[240px] pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground",
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) => date < new Date()}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              <FormDescription>
+                Your playground should have a deadline.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="owner"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Owner</FormLabel>
               <FormControl>
-                <UsersList onChange={field.onChange} />
+                <UsersList omitValue="all" onChange={field.onChange} />
               </FormControl>
               <FormDescription>Owner</FormDescription>
               <FormMessage />

@@ -7,8 +7,8 @@ export default function PlayGround() {
     <Card>
       <CardHeader className="text-4xl">PlayGround</CardHeader>
       <CardContent className="flex flex-col items-center justify-between">
-        <CreatePlayground />
         <DisplayPlayground />
+        <CreatePlayground />
       </CardContent>
     </Card>
   );

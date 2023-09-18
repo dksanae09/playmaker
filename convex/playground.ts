@@ -5,6 +5,7 @@ export const create = mutation({
   args: {
     name: v.string(),
     description: v.optional(v.string()),
+    deadline: v.optional(v.string()),
     owner: v.id("users"),
     editor: v.id("users"),
   },
@@ -16,6 +17,7 @@ export const create = mutation({
     return await ctx.db.insert("playgrounds", {
       name: args.name,
       description: args.description,
+      deadline: args.deadline,
       owner: args.owner,
       editor: args.editor,
     });

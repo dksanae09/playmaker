@@ -24,11 +24,17 @@ export default function UsersList({
   omitValue,
   onChange,
 }: {
-  omitValue?: Id<"users">;
+  omitValue?: Id<"users"> | "all";
   onChange: (value: Id<"users">) => void;
 }) {
   const usersList = useQuery(api.users.getAll);
-  const filteredUsersList = usersList?.filter((user) => user._id !== omitValue);
+  const user = useQuery(api.users.get, {
+    id: localStorage.getItem("userId") as Id<"users">,
+  });
+  const filteredUsersList =
+    omitValue !== "all"
+      ? usersList?.filter((user) => user._id !== omitValue)
+      : [user];
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
 
@@ -42,7 +48,7 @@ export default function UsersList({
           className="w-[200px] justify-between"
         >
           {email && filteredUsersList
-            ? filteredUsersList.find((user) => user.email === email)?.email
+            ? filteredUsersList.find((user) => user?.email === email)?.email
             : "Select User..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -54,20 +60,20 @@ export default function UsersList({
           <CommandGroup>
             {filteredUsersList?.map((user) => (
               <CommandItem
-                key={user._id}
+                key={user?._id}
                 onSelect={(currentValue) => {
                   setEmail(currentValue === email ? "" : currentValue);
-                  onChange(user._id as Id<"users">);
+                  onChange(user?._id as Id<"users">);
                   setOpen(false);
                 }}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    email === user.email ? "opacity-100" : "opacity-0",
+                    email === user?.email ? "opacity-100" : "opacity-0",
                   )}
                 />
-                {user.email}
+                {user?.email}
               </CommandItem>
             ))}
           </CommandGroup>
