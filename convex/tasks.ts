@@ -8,6 +8,7 @@ export const add = mutation({
     description: v.optional(v.string()),
     isDone: v.boolean(),
     deadline: v.optional(v.string()),
+    priority: v.string(),
     playgroundId: v.id("playgrounds"),
   },
   handler: async (ctx, args) => {
@@ -23,15 +24,15 @@ export const add = mutation({
       description: encryptText(args.description || ""),
       isDone: args.isDone,
       deadline: args.deadline,
+      priority: args.priority,
       playgroundId: args.playgroundId,
     });
   },
 });
 
-export const update = mutation({
+export const remove = mutation({
   args: {
     taskId: v.id("tasks"),
-    isDone: v.boolean(),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -41,7 +42,30 @@ export const update = mutation({
     if (!args.taskId) {
       throw new Error("No taskId!");
     }
-    return await ctx.db.patch(args.taskId, { isDone: args.isDone });
+    return await ctx.db.delete(args.taskId);
+  },
+});
+
+export const update = mutation({
+  args: {
+    taskId: v.id("tasks"),
+    objects: v.object({
+      name: v.optional(v.string()),
+      description: v.optional(v.string()),
+      isDone: v.optional(v.boolean()),
+      priority: v.optional(v.string()),
+      deadline: v.optional(v.string()),
+    }),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated!");
+    }
+    if (!args.taskId) {
+      throw new Error("No taskId!");
+    }
+    return await ctx.db.patch(args.taskId, { ...args.objects });
   },
 });
 

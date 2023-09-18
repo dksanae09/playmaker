@@ -7,6 +7,7 @@ export default defineSchema({
     description: v.optional(v.string()),
     isDone: v.boolean(),
     deadline: v.optional(v.string()),
+    priority: v.string(),
     playgroundId: v.id("playgrounds"),
   }),
   videos: defineTable({

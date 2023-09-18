@@ -32,7 +32,7 @@ export default function TaskFormSheet({
           Add Task
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="overflow-y-auto">
         <SheetHeader>
           <SheetTitle>Add Tasks To Your Playground!</SheetTitle>
           <SheetDescription>

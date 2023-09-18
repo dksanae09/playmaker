@@ -22,7 +22,9 @@ export default function TimeLine({ isOwner }: { isOwner: boolean }) {
     setIsDone(!isDone);
     update({
       taskId,
-      isDone: !isDone,
+      objects: {
+        isDone: !isDone,
+      },
     });
   }
 
