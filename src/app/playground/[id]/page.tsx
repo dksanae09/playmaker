@@ -31,6 +31,8 @@ export default function PlaygroundBoard({
     }
   }, [playground, setPlayground]);
 
+  if (!playground) return <div>Loading...</div>;
+
   if (playground?.owner !== userId && playground?.editor !== userId) {
     return <div>Not authorized</div>;
   }

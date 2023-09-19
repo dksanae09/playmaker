@@ -25,7 +25,7 @@ function AuthenticatedPlayground({ userId }: { userId: Id<"users"> }) {
 export default function DisplayPlayground() {
   const userId = useStoreUserEffect();
 
-  if (!userId) return <>User not found!</>;
+  if (!userId) return <div>User not found!</div>;
 
   return (
     <Card className="flex flex-col items-center justify-center">

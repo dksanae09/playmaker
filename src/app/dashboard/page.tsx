@@ -21,6 +21,10 @@ export default function Dashboard() {
     }
   }, []);
 
+  if (!userId || !activePlaygrounds) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Card className="container mx-auto py-5">
       <CardHeader className="text-4xl">Dashboard</CardHeader>

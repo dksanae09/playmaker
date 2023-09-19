@@ -1,5 +1,6 @@
 import HeroImage from "@/components/heroImage";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -29,7 +30,9 @@ export default function Home() {
             today and experience the future of YouTube content creation for
             free! <br />
             Create your First Playground!
-            <Button variant="link">Go to Playgrounds!</Button>
+            <Button variant="link">
+              <Link href="/playground">Go to Playgrounds!</Link>
+            </Button>
           </CardDescription>
         </CardContent>
       </CardContent>
