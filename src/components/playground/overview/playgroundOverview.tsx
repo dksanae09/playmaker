@@ -18,7 +18,9 @@ export default function PlaygroundOverview() {
   return (
     <Card>
       <CardContent className="flex items-center justify-between">
-        <CardHeader className="text-4xl">Title Here!</CardHeader>
+        <CardHeader className="text-4xl underline">
+          {playground?.name}
+        </CardHeader>
         {playground && <Members playground={playground} />}
         <DatePickerWithRange isOwner={isOwner} />
       </CardContent>
