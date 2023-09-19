@@ -6,6 +6,7 @@ import { useQuery } from "convex/react";
 import { Id } from "../../../convex/_generated/dataModel";
 import { columns } from "@/components/dashboard/playground/columns";
 import { DataTable } from "@/components/dashboard/playground/data-table";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export default function Dashboard() {
   const [userId, setUserId] = useState<Id<"users"> | null>(null);
@@ -21,10 +22,13 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="container mx-auto py-10">
-      {activePlaygrounds && (
-        <DataTable columns={columns} data={activePlaygrounds} />
-      )}
-    </div>
+    <Card className="container mx-auto py-5">
+      <CardHeader className="text-4xl">Dashboard</CardHeader>
+      <CardContent>
+        {activePlaygrounds && (
+          <DataTable columns={columns} data={activePlaygrounds} />
+        )}
+      </CardContent>
+    </Card>
   );
 }

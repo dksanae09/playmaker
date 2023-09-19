@@ -6,7 +6,7 @@ import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { PlaygroundContext } from "@/context/playgroundContextProvider";
 import { Card, CardContent } from "@/components/ui/card";
-import UploadUtube from "./uploadUtube";
+import ApprovalComponent from "./approvalComponent";
 
 export default function PlaygroundVideo() {
   const { playground } = useContext(PlaygroundContext);
@@ -29,7 +29,7 @@ export default function PlaygroundVideo() {
       </CardContent>
       <CardContent>
         <PlaygroundVideoForm />
-        {playground && <UploadUtube playgroundId={playground?._id} />}
+        {playground && <ApprovalComponent playgroundId={playground?._id} />}
       </CardContent>
     </Card>
   );

@@ -8,8 +8,14 @@ import React from "react";
 import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
-export default function UploadUtube({
+export default function ApprovalComponent({
   playgroundId,
 }: {
   playgroundId: Id<"playgrounds">;
@@ -26,21 +32,29 @@ export default function UploadUtube({
 
   return (
     <Card>
-      <CardHeader>Approve the Video!</CardHeader>
-      <CardContent>
+      <CardContent className="mt-5">
+        <Accordion type="single" collapsible>
+          <AccordionItem value="upload">
+            <AccordionTrigger className="text-primary">
+              Are you a developer?
+            </AccordionTrigger>
+            <AccordionContent>
+              Upload the video directly to Youtube! Coming Soon!
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </CardContent>
+      <Separator />
+      <CardContent className="flex items-center">
         <Button
           disabled={video === null || video?.approved}
           onClick={handleVideoApproval}
           className={cn(video?.approved ? "bg-green-500" : "bg-red-500")}
         >
-          Approve
+          {video?.approved ? "Approved!" : "Approve the Video!"}
         </Button>
       </CardContent>
       <Separator />
-      <CardContent>
-        <CardHeader>Upload to Youtube!</CardHeader>
-        <CardContent>Add Youtube Keys!</CardContent>
-      </CardContent>
     </Card>
   );
 }
