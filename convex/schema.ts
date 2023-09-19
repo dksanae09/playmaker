@@ -14,8 +14,9 @@ export default defineSchema({
     body: v.string(),
     userId: v.id("users"),
     playgroundId: v.id("playgrounds"),
+    approved: v.boolean(),
     format: v.string(),
-  }),
+  }).index("by_playground", ["playgroundId"]),
   messages: defineTable({
     message: v.string(),
     playgroundId: v.id("playgrounds"),

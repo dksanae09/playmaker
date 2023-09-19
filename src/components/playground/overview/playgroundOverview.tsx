@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { DatePickerWithRange } from "@/components/ui/date-range";
 import TaskFormSheet from "./taskFormSheet";
+import Members from "./members";
 
 // todo:
 //  ai write descp tasks
@@ -18,6 +19,7 @@ export default function PlaygroundOverview() {
     <Card>
       <CardContent className="flex items-center justify-between">
         <CardHeader className="text-4xl">Title Here!</CardHeader>
+        {playground && <Members playground={playground} />}
         <DatePickerWithRange isOwner={isOwner} />
       </CardContent>
       <CardContent>
