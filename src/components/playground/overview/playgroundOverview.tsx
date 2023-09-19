@@ -7,10 +7,6 @@ import { DatePickerWithRange } from "@/components/ui/date-range";
 import TaskFormSheet from "./taskFormSheet";
 import Members from "./members";
 
-// todo:
-//  ai write descp tasks
-//  ability to edit descp
-
 export default function PlaygroundOverview() {
   const { userId, playground } = useContext(PlaygroundContext);
   const isOwner = userId === playground?.owner;

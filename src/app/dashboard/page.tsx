@@ -7,6 +7,20 @@ import { Id } from "../../../convex/_generated/dataModel";
 import { columns } from "@/components/dashboard/playground/columns";
 import { DataTable } from "@/components/dashboard/playground/data-table";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+
+function LoadingDashboard() {
+  return (
+    <div className="mt-10 flex h-full w-full flex-col justify-center gap-5">
+      <div className="h-full w-full">
+        <Skeleton className="h-10 w-full" />
+      </div>
+      <div className="h-[400px] w-full">
+        <Skeleton className="h-full w-full" />
+      </div>
+    </div>
+  );
+}
 
 export default function Dashboard() {
   const [userId, setUserId] = useState<Id<"users"> | null>(null);
@@ -22,7 +36,7 @@ export default function Dashboard() {
   }, []);
 
   if (!userId || !activePlaygrounds) {
-    return <div>Loading...</div>;
+    return <LoadingDashboard />;
   }
 
   return (

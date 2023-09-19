@@ -10,6 +10,19 @@ import { Id } from "../../../../convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import { BlocksIcon, CheckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+
+function LoadingTasks() {
+  return (
+    <div className="flex w-full">
+      <div className="flex w-full items-center justify-between rounded-md">
+        <Skeleton className="h-[100px] w-[350px]" />
+        <Skeleton className="h-[100px] w-[350px]" />
+        <Skeleton className="h-[100px] w-[350px]" />
+      </div>
+    </div>
+  );
+}
 
 export default function TimeLine({ isOwner }: { isOwner: boolean }) {
   const { playground } = useContext(PlaygroundContext);
@@ -26,6 +39,10 @@ export default function TimeLine({ isOwner }: { isOwner: boolean }) {
         isDone: !isDone,
       },
     });
+  }
+
+  if (!tasks) {
+    return <LoadingTasks />;
   }
 
   return (
